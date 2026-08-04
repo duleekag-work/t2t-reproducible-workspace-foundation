@@ -1,0 +1,25 @@
+# Local configuration - never committed. See .env.example for the template.
+.env
+.env.local
+.env.*.local
+
+# Installed dependencies - reproducible from the manifest, so not stored in history.
+node_modules/
+
+# Build output - generated, not authored.
+dist/
+build/
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor and OS noise
+.DS_Store
+Thumbs.db
+
+# Personal editor state is ignored, but shared project configuration is committed.
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json

@@ -1,0 +1,35 @@
+# Dev Container topology for Session 1.
+#
+#   app   - the development environment the editor attaches to (Node 22)
+#   mongo - a sibling container on the same Docker network
+#
+# The service name `mongo` is the hostname the app connects to.
+# Nothing is installed on the host machine except Docker itself.
+
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm
+    volumes:
+      - ../..:/workspaces:cached
+    # Keeps the container alive; the editor supplies the real workload.
+    command: sleep infinity
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: t2t_demo
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand({ ping: 1 }).ok"]
+      interval: 3s
+      timeout: 3s
+      retries: 15
+      start_period: 5s
+
+volumes:
+  mongo-data:

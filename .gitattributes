@@ -1,0 +1,5 @@
+# Normalize line endings so Windows, macOS and Linux see the same bytes.
+* text=auto eol=lf
+
+# Shell scripts must stay LF or they will not execute inside the container.
+*.sh text eol=lf
