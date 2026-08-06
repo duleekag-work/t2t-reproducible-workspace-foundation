@@ -10,3 +10,11 @@ export function normalizeName(value) {
   if (trimmed.length === 0 || trimmed.length > MAX_NAME_LENGTH) return null;
   return trimmed;
 }
+
+const OBJECT_ID_PATTERN = /^[0-9a-f]{24}$/i;
+
+/** Accepts an item id only in the exact shape the database uses. */
+export function parseItemId(value) {
+  if (typeof value !== 'string') return null;
+  return OBJECT_ID_PATTERN.test(value) ? value : null;
+}
