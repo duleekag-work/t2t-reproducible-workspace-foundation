@@ -11,7 +11,7 @@
     "dev:debug": "node --watch --inspect src/index.js",
     "start": "node src/index.js",
     "seed": "node src/seed.js",
-    "test": "node --test ../../tests/server"
+    "test": "node --test ../../tests/server/*.test.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
