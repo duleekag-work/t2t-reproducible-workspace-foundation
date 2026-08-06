@@ -134,4 +134,8 @@ immediately after cloning. Read `.env.example` to see every value the applicatio
 curl -X POST http://localhost:4000/api/items \
   -H 'Content-Type: application/json' \
   -d '{"name":"my first item"}'
+
+curl -i -X DELETE http://localhost:4000/api/items/<id>   
 ```
+
+
