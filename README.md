@@ -123,7 +123,7 @@ immediately after cloning. Read `.env.example` to see every value the applicatio
 
 ## API
 
-| Method | Path           | Purpose                  |
+| Method | Path           | What is does             |
 | :----- | :------------- | :----------------------- |
 | GET    | `/api/health`  | Liveness check           |
 | GET    | `/api/items`   | List the 50 newest items |
