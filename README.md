@@ -123,14 +123,20 @@ immediately after cloning. Read `.env.example` to see every value the applicatio
 
 ## API
 
-| Method | Path           | What is does             |
-| :----- | :------------- | :----------------------- |
-| GET    | `/api/health`  | Liveness check           |
-| GET    | `/api/items`   | List the 50 newest items |
-| POST   | `/api/items`   | Create an item           |
+| Method | Path               | What is does             |
+| :----- | :-------------     | :----------------------- |
+| GET    | `/api/health`      | Liveness check           |
+| GET    | `/api/items`       | List the 50 newest items |
+| POST   | `/api/items`       | Create an item           |
+| DELETE | `/api/items/:id`   | Delete an item           |
+
 
 ```bash
 curl -X POST http://localhost:4000/api/items \
   -H 'Content-Type: application/json' \
   -d '{"name":"my first item"}'
+
+curl -i -X DELETE http://localhost:4000/api/items/<id>   
 ```
+
+
