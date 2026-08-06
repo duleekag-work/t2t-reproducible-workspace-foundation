@@ -130,6 +130,7 @@ immediately after cloning. Read `.env.example` to see every value the applicatio
 | POST   | `/api/items`       | Create an item           |
 | DELETE | `/api/items/:id`   | Delete an item           |
 
+
 ```bash
 curl -X POST http://localhost:4000/api/items \
   -H 'Content-Type: application/json' \
