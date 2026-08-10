@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { settings } from './config.js';
+import { log } from './log.js';
 import { connect } from './db.js';
 import { itemsRouter } from './routes/items.js';
 
@@ -16,14 +17,18 @@ app.get('/api/health', (_req, res) => {
 app.use('/api/items', itemsRouter);
 
 // Errors are logged server-side; clients receive nothing internal.
-app.use((error, _req, res, _next) => {
-  console.error(error);
+app.use((error, req, res, _next) => {
+  log.error('request failed', {
+    method: req.method,
+    path: req.path,
+    message: error.message,
+  });
   res.status(500).json({ error: 'Internal server error' });
 });
 
 await connect();
 
 app.listen(settings.port, () => {
-  console.log(`API listening on http://localhost:${settings.port}`);
-  console.log(`Connected to ${settings.mongoUrl}/${settings.mongoDb}`);
+  log.info('api listening', { url: `http://localhost:${settings.port}` });
+  log.info('database connected', { url: `${settings.mongoUrl}/${settings.mongoDb}` });
 });

@@ -8,4 +8,6 @@ export const settings = {
   port: Number(process.env.PORT ?? 4000),
   mongoUrl: process.env.MONGO_URL ?? 'mongodb://mongo:27017',
   mongoDb: process.env.MONGO_DB ?? 't2t_demo',
+
+  logLevel: (process.env.LOG_LEVEL ?? 'info').toLowerCase(),
 };

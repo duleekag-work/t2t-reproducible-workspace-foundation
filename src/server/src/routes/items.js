@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { ObjectId } from 'mongodb';
 import { items } from '../db.js';
+import { log } from '../log.js';
 import { normalizeName, parseItemId } from '../validate.js';
 
 export const itemsRouter = Router();
@@ -8,6 +9,7 @@ export const itemsRouter = Router();
 itemsRouter.get('/', async (_req, res, next) => {
   try {
     const found = await items().find().sort({ createdAt: -1 }).limit(50).toArray();
+    log.debug('listed items', { count: found.length });
     res.json(
       found.map(({ _id, name, createdAt }) => ({
         id: _id.toString(),
@@ -29,6 +31,8 @@ itemsRouter.post('/', async (req, res, next) => {
 
     const document = { name, createdAt: new Date() };
     const { insertedId } = await items().insertOne(document);
+    
+    log.info('item created', { itemId: insertedId.toString() });
     res.status(201).json({ id: insertedId.toString(), ...document });
   } catch (error) {
     next(error);
@@ -42,11 +46,13 @@ itemsRouter.delete('/:id', async (req, res, next) => {
       return res.status(400).json({ error: 'A valid item id is required.' });
     }
 
+    log.debug('deleting item', { itemId: id });
     const { deletedCount } = await items().deleteOne({ _id: new ObjectId(id) });
     if (deletedCount === 0) {
       return res.status(404).json({ error: 'Item not found.' });
     }
 
+    log.info('item deleted', { itemId: id });
     res.status(204).end();
   } catch (error) {
     next(error);
