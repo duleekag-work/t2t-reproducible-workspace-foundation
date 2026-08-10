@@ -1,0 +1,34 @@
+site_name: Dev Container Demo
+site_description: Reference documentation for the T2T demo application.
+docs_dir: docs
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.superfences:
+      custom_fences:
+        # Without this, Mermaid blocks render as code instead of diagrams.
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Home: index.md
+  - Tutorial:
+      - Getting started: tutorial/getting-started.md
+  - How-to:
+      - Add an endpoint: how-to/add-an-endpoint.md
+  - Reference:
+      - API: reference/api.md
+      - Configuration: reference/configuration.md
+  - Explanation:
+      - Architecture: explanation/architecture.md
+  - Decisions:
+      - 0001 Use Dev Containers: adr/0001-use-dev-containers.md
