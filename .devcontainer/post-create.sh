@@ -14,8 +14,12 @@ npm --prefix src/server install
 echo "Installing client dependencies..."
 npm --prefix src/client install
 
+echo "Installing documentation toolchain..."
+pip install --quiet --no-input mkdocs-material
+
 echo
 echo "Ready. Next steps:"
 echo "  npm --prefix src/server run seed   # load sample data into MongoDB"
 echo "  npm --prefix src/server run dev    # API on http://localhost:4000"
 echo "  npm --prefix src/client run dev    # Web on http://localhost:5173"
+echo "  mkdocs serve -a 0.0.0.0:8888       # Docs on http://localhost:8888"

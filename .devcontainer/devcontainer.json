@@ -4,10 +4,14 @@
   "service": "app",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "remoteUser": "node",
-  "forwardPorts": [4000, 5173, 27017],
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": { "version": "3.12" }
+  },
+  "forwardPorts": [4000, 5173, 8888, 27017],
   "portsAttributes": {
     "4000": { "label": "API (Express)", "onAutoForward": "notify" },
     "5173": { "label": "Web (Vite)", "onAutoForward": "openBrowser" },
+    "8888": { "label": "Docs (MkDocs)", "onAutoForward": "notify" },
     "27017": { "label": "MongoDB", "onAutoForward": "silent" }
   },
   "postCreateCommand": "bash .devcontainer/post-create.sh",
