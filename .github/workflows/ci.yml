@@ -1,0 +1,43 @@
+name: CI
+
+# The moment from Session 2: a change is proposed, and is checked before anyone merges it.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    # .env is git-ignored, so the pipeline supplies its own configuration.
+    env:
+      LOG_LEVEL: error
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # `ci` installs exactly what the lockfile says, unlike `install`.
+      - name: Install dependencies
+        run: npm --prefix src/server ci
+
+      - name: Run tests
+        run: npm --prefix src/server test
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install documentation toolchain
+        run: pip install mkdocs-material
+
+      # --strict turns warnings into errors, so a broken nav link fails the build.
+      - name: Build documentation
+        run: mkdocs build --strict

@@ -105,6 +105,8 @@ forwarded ports.
 ├── .env.example             Committed configuration template - no secrets
 ├── .gitattributes           Line-ending normalization
 ├── .gitignore
+├── .pre-commit-config.yaml  Hook rules - shared, installed per clone
+├── CONTRIBUTING.md          How a change travels through the repository
 ├── LICENSE
 └── README.md
 ```
@@ -118,6 +120,24 @@ forwarded ports.
 
 The Dev Container copies the template on first creation, which is why the app runs
 immediately after cloning. Read `.env.example` to see every value the application expects.
+
+---
+
+## Automation
+
+Two gates are committed to this repository:
+
+- `.pre-commit-config.yaml` defines the local hook checks. Run `pre-commit install` in
+  each clone so commits are checked before they reach history.
+- `.github/workflows/ci.yml` defines the shared pipeline. Pull requests run the test and
+  docs jobs, and you can rehearse them locally with `act --pull=false pull_request`.
+
+Both run inside the dev container: `post-create.sh` installs them, and the container
+shares the host's Docker socket so `act` can start its runner containers. Pull the runner
+image once on the host with `docker pull catthehacker/ubuntu:act-latest`.
+
+Step-by-step instructions are in [Run the gates locally](docs/how-to/run-the-gates.md).
+How a change travels through review is in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
