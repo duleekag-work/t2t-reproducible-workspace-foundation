@@ -14,8 +14,8 @@ npm --prefix src/server install
 echo "Installing client dependencies..."
 npm --prefix src/client install
 
-echo "Installing documentation toolchain..."
-pip install --quiet --no-input mkdocs-material
+echo "Installing documentation and hook toolchain..."
+pip install --quiet --no-input mkdocs-material pre-commit
 
 echo
 echo "Ready. Next steps:"

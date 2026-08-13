@@ -1,0 +1,28 @@
+# Committed so the rules belong to the team, not to one laptop.
+#
+# Install into your clone once, after cloning:
+#
+#   pre-commit install
+#
+# The config is version-controlled; the installed hook is not. Anyone who skips
+# that command has no hook at all, which is why the pipeline is the real gate.
+
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks:
+      - id: gitleaks
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      # Credentials and keys must never reach history - deleting them later does not help.
+      - id: detect-private-key
+      # Session 2 failure mode: conflict markers committed into a resolved file.
+      - id: check-merge-conflict
+      # mkdocs.yml carries a Python-specific tag that safe loading rejects; the docs job
+      # covers it instead, by building the site.
+      - id: check-yaml
+        exclude: ^mkdocs\.yml$
+      - id: check-added-large-files
+        args: [--maxkb=1024]

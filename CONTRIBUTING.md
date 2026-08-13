@@ -73,6 +73,23 @@ Read your own diff first:
 git diff main...feat/12-delete-item
 ```
 
+Then run both gates, before you spend anyone else's attention:
+
+```bash
+pre-commit run --all-files      # in the dev container
+act --pull=false pull_request   # on the host, where Docker is reachable
+```
+
+Both need one-time setup in each clone, because the configuration is committed but the
+hook installation and the runner image are not:
+
+```bash
+pre-commit install
+docker pull catthehacker/ubuntu:act-latest
+```
+
+Full detail in [Run the gates locally](docs/how-to/run-the-gates.md).
+
 Then open a pull request using the template. Fill every section, and link the issue with
 a closing keyword (`Closes #12`) so the tracker maintains itself.
 
@@ -115,6 +132,10 @@ A change is done when all four gates pass:
 
 Documentation is updated in the *same* pull request as the code. If you change a setup
 step without changing the README, you have broken the README.
+
+Tests and Docs are checked by the pipeline. Code and Traceability are not, and never will
+be — no tool can tell you whether the documentation is *true*, or whether the change does
+what the issue asked.
 
 Then merge, confirm the issue closed itself, and delete the branch.
 

@@ -25,6 +25,7 @@ nav:
       - Getting started: tutorial/getting-started.md
   - How-to:
       - Add an endpoint: how-to/add-an-endpoint.md
+      - Run the gates locally: how-to/run-the-gates.md
   - Reference:
       - API: reference/api.md
       - Configuration: reference/configuration.md
@@ -32,3 +33,5 @@ nav:
       - Architecture: explanation/architecture.md
   - Decisions:
       - 0001 Use Dev Containers: adr/0001-use-dev-containers.md
+exclude_docs: |
+  adr/template.md

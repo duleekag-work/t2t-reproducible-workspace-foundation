@@ -14,6 +14,7 @@ This documentation is split by what you are trying to do right now.
 | :--- | :--- |
 | Get it running for the first time | [Getting started](tutorial/getting-started.md) |
 | Perform a specific task | [Add an endpoint](how-to/add-an-endpoint.md) |
+| Check a change before proposing it | [Run the gates locally](how-to/run-the-gates.md) |
 | Look something up | [API](reference/api.md) · [Configuration](reference/configuration.md) |
 | Understand why it is built this way | [Architecture](explanation/architecture.md) |
 | Know why a decision was made | [Decision records](adr/0001-use-dev-containers.md) |
