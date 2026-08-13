@@ -76,16 +76,16 @@ git diff main...feat/12-delete-item
 Then run both gates, before you spend anyone else's attention:
 
 ```bash
-pre-commit run --all-files      # in the dev container
-act --pull=false pull_request   # on the host, where Docker is reachable
+pre-commit run --all-files
+act --pull=false pull_request
 ```
 
-Both need one-time setup in each clone, because the configuration is committed but the
-hook installation and the runner image are not:
+Both run inside the dev container. They need one-time setup, because the configuration is
+committed but the hook installation and the runner image are not:
 
 ```bash
-pre-commit install
-docker pull catthehacker/ubuntu:act-latest
+pre-commit install                            # in the container
+docker pull catthehacker/ubuntu:act-latest    # on the host, once
 ```
 
 Full detail in [Run the gates locally](docs/how-to/run-the-gates.md).

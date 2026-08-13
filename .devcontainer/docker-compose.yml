@@ -11,6 +11,9 @@ services:
     image: mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm
     volumes:
       - ../..:/workspaces:cached
+      # Shares the host's Docker daemon so `act` can start sibling containers from in
+      # here. Anything in this container can therefore control that daemon.
+      - /var/run/docker.sock:/var/run/docker.sock
     # Keeps the container alive; the editor supplies the real workload.
     command: sleep infinity
     depends_on:

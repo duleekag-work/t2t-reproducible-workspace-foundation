@@ -1,7 +1,7 @@
 # Run the gates locally
 
 Two checks guard this repository: a hook that runs before a commit is written, and a
-pipeline that runs when a change is proposed. Both run on your machine.
+pipeline that runs when a change is proposed. Both run inside the dev container.
 
 ## 1. Install the hook
 
@@ -27,23 +27,19 @@ not remove it — the only real remedy is to rotate the credential.
 
 ## 3. Pre-pull the runner image
 
-`act` runs the pipeline in Docker. Fetch the image once so later runs need no network:
+`act` runs the pipeline in Docker. The dev container shares the host's Docker socket, so
+it uses the host's image cache. Fetch the image once, **on the host**:
 
 ```bash
 docker pull catthehacker/ubuntu:act-latest
 ```
 
-Pin the image so `act` never stops to ask which one to use:
-
-```bash
-mkdir -p ~/.config/act
-echo '-P ubuntu-latest=catthehacker/ubuntu:act-latest' > ~/.config/act/actrc
-```
+This is the only step that happens outside the container, and only because the image is
+about a gigabyte and worth downloading once.
 
 ## 4. Run the pipeline offline
 
-Run these on the **host**, not inside the dev container — `act` needs a Docker socket.
-On Windows the host means your WSL shell.
+Back in the dev container:
 
 ```bash
 act --pull=false -l              # list the jobs and their triggers
@@ -52,6 +48,12 @@ act --pull=false pull_request    # run what a pull request would run
 
 `--pull=false` keeps the run offline. If the image is not already local, the run fails
 instead of downloading it.
+
+!!! note "Containers starting containers"
+    `act` runs inside the dev container but starts its runner containers on the host's
+    Docker daemon, as siblings rather than children. That is what the mounted
+    `/var/run/docker.sock` buys. It also means anything running in this container can
+    control the host's daemon — a trade-off worth knowing you have made.
 
 ## 5. Reproduce a failure
 
